@@ -2,25 +2,27 @@ import React, { useState } from "react";
 import "./index.css";
 
 function App() {
-  const { weight, setWeight } = useState(0);
-  const { height, setHeight } = useState(0);
-  const { bmi, setBmi } = useState("");
-  const { message, setMessage } = useState("");
+  const [weight, setWeight] = useState();
+  const [height, setHeight] = useState();
+  const [bmi, setBmi] = useState("");
+  const [message, setMessage] = useState("");
 
-  let calcBmi = (e) => {
-    e.preventDefault();
+  let calcBmi = (event) => {
+    event.preventDefault();
     if (weight === 0 || height === 0) {
       alert("please enter valid height!");
     } else {
       let bmi = (weight / (height * height)) * 703;
       setBmi(bmi.toFixed(1));
 
-      if (bmi < 25) {
-        setMessage("you are underweight");
-      } else if (bmi > 25) {
-        setMessage("you are healthy");
+      if (bmi < 18.5) {
+        setMessage("You are Underweight🍴");
+      } else if (bmi >= 18.5 && bmi <= 24.9) {
+        setMessage("You have a Healthy Weight👌");
+      } else if (bmi >= 25.0 && bmi <= 29.9) {
+        setMessage("Your are Overweight🍕");
       } else {
-        setMessage("you are overweight");
+        setMessage("Obesity🤐");
       }
     }
   };
@@ -34,7 +36,7 @@ function App() {
       <h2>BMI Calculator</h2>
       <form onSubmit={calcBmi}>
         <div>
-          <label>Weight (lbs)</label>
+          <label>Weight (Lbs) : </label>
           <input
             type="number"
             placeholder="enter weight"
@@ -43,7 +45,7 @@ function App() {
           />
         </div>
         <div>
-          <label>Height (in)</label>
+          <label>Height (inches) : </label>
           <input
             type="number"
             placeholder="enter height"
